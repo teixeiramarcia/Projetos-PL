@@ -8,7 +8,9 @@ category = ""
 sentence = ""
 in_category = 0
 line = 1
-my_list = {}
+
+my_category = {}
+my_categories = dict(set(my_category))
 
 dest_file = open('output.html', 'w')
 
@@ -38,8 +40,7 @@ for linha in file:
             
         elif (y.group(1) == 'I'):
             num_elems += 1
-            sentence += y.group(3)
-            sentence += ' '
+            sentence += y.group(3) + ' '
         elif (y.group(4) == 'O'):
             if (in_category == 1):
                 dest_file.write("        " + "<p>" + category + sentence + "</p>\n")
