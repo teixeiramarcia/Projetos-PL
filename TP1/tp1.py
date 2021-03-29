@@ -7,7 +7,6 @@ cat = ""
 category = ""
 sentence = ""
 in_category = 0
-line = 1
 
 my_categories = dict(set())
 
