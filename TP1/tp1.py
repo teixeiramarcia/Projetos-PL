@@ -2,15 +2,14 @@ import re
 
 file = open('train_test.txt', 'r')
 
-
 num_elems = 0
+cat = ""
 category = ""
 sentence = ""
 in_category = 0
 line = 1
 
-my_category = {}
-my_categories = dict(set(my_category))
+my_categories = dict(set())
 
 dest_file = open('output.html', 'w')
 
@@ -28,13 +27,17 @@ for linha in file:
     if y:
         if (y.group(1) == 'B'):
             if (in_category == 1):
-                dest_file.write("        " + "<p>" + category + sentence + "  (elements: " + str(num_elems) + ")</p>")
+                dest_file.write("        " + "<p>" + cat + sentence + "  (elements: " + str(num_elems) + ")</p>\n")
+                update_in_category(category, sentence)
                 num_elems = 0
                 category = ""
+                cat = ""
                 sentence = ""
             in_category = 1
             num_elems += 1
-            category = "<strong><a href='https://www.google.com/' style='color: #535353'>" + y.group(2) + "</a>" + ": </strong>"
+            category = y.group(2)
+            cat = f"<strong><a href='{category}.html' style='color: #535353'>" + category + "</a>" + ": </strong>"
+            update_categories(category)
             sentence = y.group(3) + ' '
             
         elif (y.group(1) == 'I'):
@@ -42,18 +45,59 @@ for linha in file:
             sentence += y.group(3) + ' '
         elif (y.group(4) == 'O'):
             if (in_category == 1):
-                dest_file.write("        " + "<p>" + category + sentence + "  (elements: " + str(num_elems) + ")</p>")
+                dest_file.write("        " + "<p>" + cat + sentence + "  (elements: " + str(num_elems) + ")</p>\n")
+                update_in_category(category, sentence)
                 num_elems = 0
                 category = ""
+                cat = ""
                 sentence = ""
                 in_category = 0
     else:
-        dest_file.write("        " + "<p>" + category + sentence + "  (elements: " + str(num_elems) + ")</p>")
+        dest_file.write("        " + "<p>" + cat + sentence + "  (elements: " + str(num_elems) + ")</p>\n")
+        update_in_category(category, sentence)
         num_elems = 0
         category = ""
+        cat = ""
         sentence = ""
         in_category = 0
-        dest_file.write("<p>&nbsp;</p>")
+        dest_file.write("        <p>&nbsp;</p>\n")
 dest_file.write("     </body>\n")
-dest_file.write(" </html>")
+dest_file.write("</html>")
 dest_file.close()
+createFiles()
+
+
+#### Helper functions ####
+def update_categories(category):
+    if(category not in my_categories.keys()):
+        vals = set()
+        my_categories[category] = vals
+
+def update_in_category(category, value):
+    if (category in my_categories.keys()):
+        my_categories.get(category).add(value)
+
+def showCategory(category):
+    cat = my_categories.get(category)
+    return cat
+
+def createFiles():
+    for (cat,val) in my_categories.items():
+        file = open(cat + '.html', 'w')
+
+        file.write("<!DOCTYPE html>\n")
+        file.write("<html>\n")
+        file.write(" <head>\n")
+        file.write("     <meta charset='UTF-8'/>\n")
+        file.write("     <title>" + cat + "</title>\n")
+        file.write(" </head>\n")
+        file.write("     <body style='background-color: #e6e6ff;'>\n")
+        file.write("        <h2 style='color: #633b97'>Categoria: " + cat + "</h2>\n")
+        file.write("        <p>&nbsp;</p>\n")
+        
+        for v in val:
+            file.write("<p>" + v + "<p>")
+            file.write("        <p>&nbsp;</p>\n")
+        file.write("     </body>\n")
+        file.write("</html>")
+        file.close()
