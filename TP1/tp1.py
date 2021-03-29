@@ -8,6 +8,9 @@ category = ""
 sentence = ""
 in_category = 0
 
+line = 0
+string_linha = ""
+
 my_categories = dict(set())
 
 #### Helper functions ####
@@ -60,9 +63,10 @@ def createFiles():
         file.write("        <button><a href='output.html'>Home</a></button>")
         file.write("        <p>&nbsp;</p>\n")
         
+        file.write("        <ul>")
         for v in val:
-            file.write("        <p>" + v + "<p>\n")
-            file.write("        <p>&nbsp;</p>\n")
+            file.write("            <li><p>" + v + "<p></li>\n")
+        file.write("        </ul>")
         file.write("    </body>\n")
         file.write("</html>")
         file.close()
@@ -86,6 +90,7 @@ for linha in file:
             if (in_category == 1):
                 if (num_elems != 0):
                     dest_file.write("       " + "<p>" + cat + sentence + "  (elements: " + str(num_elems) + ")</p>\n")
+                    sentence += " (linhas: " + string_linha + ")"
                     update_in_category(category, sentence)
                     num_elems = 0
                     category = ""
@@ -97,14 +102,17 @@ for linha in file:
             cat = f"<strong><a href='{category}.html' style='color: #535353'>" + category + "</a>" + ": </strong>"
             update_categories(category)
             sentence = y.group(4) + ' '
+            string_linha = str(line) 
             
         elif (y.group(1) == 'I'):
             num_elems += 1
             sentence += y.group(4) + ' '
+            string_linha += ', ' + str(line)
         elif (y.group(5) == 'O'):
             if (in_category == 1):
                 if(num_elems != 0):
                     dest_file.write("       " + "<p>" + cat + sentence + "  (elements: " + str(num_elems) + ")</p>\n")
+                    sentence += " (linhas: " + string_linha + ")"
                     update_in_category(category, sentence)
                     num_elems = 0
                     category = ""
@@ -114,6 +122,7 @@ for linha in file:
     else:
         if (num_elems != 0):
             dest_file.write("       " + "<p>" + cat + sentence + "  (elements: " + str(num_elems) + ")</p>\n")
+            sentence += " (linhas: " + string_linha + ")"
             update_in_category(category, sentence)
             num_elems = 0
             category = ""
@@ -121,6 +130,7 @@ for linha in file:
             sentence = ""
             in_category = 0
             dest_file.write("       <p>&nbsp;</p>\n")
+    line += 1
 dest_file.write("   </body>\n")
 dest_file.write("</html>")
 dest_file.close()
