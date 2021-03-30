@@ -13,15 +13,22 @@ string_linha = ""
 
 my_categories = dict(set())
 
+my_categories_unrepeated = dict(set())
+
 #### Helper functions ####
 def update_categories(category):
     if(category not in my_categories.keys()):
         vals = set()
         my_categories[category] = vals
+        vals2 = set()
+        my_categories_unrepeated[category] = vals2
 
-def update_in_category(category, value):
+def update_in_category(category, value, unrepeated):
     if (category in my_categories.keys()):
-        my_categories.get(category).add(value)
+        if (unrepeated == 0):
+            my_categories.get(category).add(value)
+        else:
+            my_categories_unrepeated.get(category).add(value)
 
 def showCategory(category):
     cat = my_categories.get(category)
@@ -41,7 +48,8 @@ def createOutput():
     file.write("        <h3 style='color: #633b97'>Categorias:</h3>\n")
     file.write("        <ul>\n")
     for (cat,val) in my_categories.items():
-        file.write(f"           <li><strong><a href='{cat}.html' style='color: #535353'>" + cat + "</a>" + ": </strong>" + str(len(val)) + " elementos" +"<p></li>\n")
+        unrepeated = str(len(my_categories_unrepeated.get(cat)))
+        file.write(f"           <li><strong><a href='{cat}.html' style='color: #535353'>" + cat + "</a>" + ": </strong>" + str(len(val)) + " elementos (" + unrepeated + " únicos)<p></li>\n")
     file.write("        </ul>\n")
     file.write("        <button><a href='extra.html'>Extras</a></button>\n")
     file.write("    </body>\n")
@@ -90,8 +98,9 @@ for linha in file:
             if (in_category == 1):
                 if (num_elems != 0):
                     dest_file.write("       " + "<p>" + cat + sentence + "  (elements: " + str(num_elems) + ")</p>\n")
+                    update_in_category(category, sentence, 1)
                     sentence += " (linhas: " + string_linha + ")"
-                    update_in_category(category, sentence)
+                    update_in_category(category, sentence, 0)
                     num_elems = 0
                     category = ""
                     cat = ""
@@ -112,8 +121,9 @@ for linha in file:
             if (in_category == 1):
                 if(num_elems != 0):
                     dest_file.write("       " + "<p>" + cat + sentence + "  (elements: " + str(num_elems) + ")</p>\n")
+                    update_in_category(category, sentence, 1)
                     sentence += " (linhas: " + string_linha + ")"
-                    update_in_category(category, sentence)
+                    update_in_category(category, sentence, 0)
                     num_elems = 0
                     category = ""
                     cat = ""
@@ -122,8 +132,9 @@ for linha in file:
     else:
         if (num_elems != 0):
             dest_file.write("       " + "<p>" + cat + sentence + "  (elements: " + str(num_elems) + ")</p>\n")
+            update_in_category(category, sentence, 1)
             sentence += " (linhas: " + string_linha + ")"
-            update_in_category(category, sentence)
+            update_in_category(category, sentence, 0)
             num_elems = 0
             category = ""
             cat = ""
