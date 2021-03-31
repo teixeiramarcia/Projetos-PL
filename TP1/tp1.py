@@ -44,7 +44,7 @@ def createOutput():
     file.write("        <title>Categorias</title>\n")
     file.write("    </head>\n")
     file.write("    <body style='background-color: #e6e6ff;'>\n")
-    file.write("        <h2 style='color: #633b97'>Machine Learning: Datasets de treino</h2>\n")
+    file.write("        <h2 style='color: #633b97'>Machine Learning: datasets de treino</h2>\n")
     file.write("        <h3 style='color: #633b97'>Categorias:</h3>\n")
     file.write("        <ul>\n")
     for (cat,val) in my_categories.items():
