@@ -112,7 +112,6 @@ for linha in file:
             update_categories(category)
             sentence = y.group(4) + ' '
             string_linha = str(line) 
-            
         elif (y.group(1) == 'I'):
             num_elems += 1
             sentence += y.group(4) + ' '

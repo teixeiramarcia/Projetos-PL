@@ -92,9 +92,9 @@ dest_file.write("   <body style='background-color: #e6e6ff;'>\n")
 dest_file.write("       <h2 style='color: #633b97'>Extras</h2>\n")
 
 for linha in file:
-    y = re.match(r'(O)|(B)|(I)', linha)
+    y = re.match(r'(B|I|O)', linha)
     if y:
-        if(y.group(2) == 'B'):
+        if(y.group(1) == 'B'):
             if (in_category == 1):
                 if (num_elems != 0):
                     dest_file.write("       " + "<p>" + sentence + "  (elements: " + str(num_elems) + ")</p>\n")
@@ -113,7 +113,7 @@ for linha in file:
                 category = y.group(1)
                 update_categories(category)
             string_linha = str(line)
-        elif(y.group(3) == 'I'):
+        elif(y.group(1) == 'I'):
             linha = re.sub(r'I-([a-zA-Z_]+)(\t| )+([a-zA-Z0-9]+)', r' \3', linha)
             sentence += linha
             num_elems += 1
