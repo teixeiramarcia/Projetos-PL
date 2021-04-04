@@ -1,6 +1,6 @@
 import re
 
-file = open('train_test.txt', 'r')
+file = open('train.txt', 'r')
 
 num_elems = 0
 cat = ""
