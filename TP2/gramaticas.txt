@@ -1,0 +1,147 @@
+-------------------------------------------------------------------------Versão sem funçoes (atualizada)----------------------------------------------------------
+"CODE : DECLS INSIDE
+
+ INSIDE : INSIDE INFO
+        | VAZIO
+
+ DECLS : DECLS DECL ';'
+       | DECLS DECLA ';'
+       | VAZIO
+
+ INFO : ATUL ';'
+      | MATH ';'
+      | IFBLOCK
+      | REPEATBLOCK
+      | PRINT '(' VALOR ')' ';'
+      | RETURN VALOR ';'
+ 
+ DECL : INT ID
+      | INT ID '=' VALOR
+ 
+ DECLA : INT ID '[' NUM ']'
+       | INT ID '[' ID ']'
+       | INT ID '[' MATH ']'
+
+ ATUL : ID '=' VALOR
+      | ID '[' NUM ']' '=' VALOR
+      | ID '[' ID ']' '=' VALOR
+      | ID '[' MATH ']' '=' VALOR
+
+ VALOR : VALOR1
+       | SCAN
+
+ VALOR1 : NUM
+        | ID
+        | ID '[' ID ']'
+        | ID '[' NUM ']'
+        | ID '[' MATH ']'
+        | MATH
+ 
+ MATH : MATH '+' TERMO
+      | '(' MATH '+' TERMO ')'
+      | MATH '-' TERMO
+      | '(' MATH '-' TERMO ')'
+      | TERMO
+      | '(' TERMO ')'
+ 
+ TERMO : TERMO '*' FACTOR
+       |'(' TERMO '*' FACTOR ')'
+       | TERMO '/' FACTOR
+       | '(' TERMO '/' FACTOR ')'
+       | FACTOR
+       | '(' FACTOR ')'
+ 
+ FACTOR : MATH
+        | '(' MATH ')'
+        | VALOR
+ 
+ IFBLOCK : IF '(' COND ')' '{' INSIDE '}' IFBLOCK2
+
+ IFBLOCK2 : ELIF '(' COND ')' '{' INSIDE '}' IFBLOCK2
+          | ELSE '{' INSIDE '}'
+          | VAZIO
+
+ REPEATBLOCK : REPEAT '(' COND ')' '{' INSIDE '}'
+ 
+ COND : VALOR1 '<' VALOR1 COND1
+      | VALOR1 '>' VALOR1 COND1
+      | VALOR1 '=' VALOR1 COND1
+      | VALOR1 '<=' VALOR1 COND1
+      | VALOR1 '>=' VALOR1 COND1
+
+ COND1 : '|''|' COND
+       | '&''&' COND"
+
+----------------------------------------------------------------------Versão com funções (desatualizada)--------------------------------------------------------------
+
+"FUNC : ID '{' CODE '}' FUNC
+      | Vazio
+
+ CODE : DECLS INSIDE
+
+ INSIDE : INSIDE INFO
+        | Vazio
+
+ DECLS : DECLS DECL ';'
+       | DECLS DECLA ';'
+       | Vazio
+
+ INFO : ATUL ';'
+      | MATH ';'
+      | IFBLOCK
+      | REPEATBLOCK
+      | PRINT '(' VALOR ')' ';'
+      | RETURN VALOR ';'
+ 
+ DECL : INT ID '=' VALOR
+ 
+ DECLA : INT ID '[' NUM ']' '=' VALOR
+       | INT ID '[' ID ']' '=' VALOR
+       | INT ID '[' MATH ']' '=' VALOR
+
+ ATUL : ID '=' VALOR
+      ! ID '[' NUM ']' '=' VALOR
+      | ID '[' ID ']' '=' VALOR
+      | ID '[' MATH ']' '=' VALOR
+
+ VALOR : VALOR1
+       | SCAN
+
+ VALOR1 : NUM
+        | ID
+        | ID '[' ID ']'
+        | ID '[' NUM ']'
+        | ID '[' MATH ']'
+        | MATH
+ 
+ MATH : MATH '+' TERMO
+      | '(' MATH '+' TERMO ')'
+      | MATH '-' TERMO
+      | '(' MATH '-' TERMO ')'
+      | TERMO
+      | '(' TERMO ')'
+ 
+ TERMO : TERMO '*' FACTOR
+       |'(' TERMO '*' FACTOR ')'
+       | TERMO '/' FACTOR
+       | '(' TERMO '/' FACTOR ')'
+       | FACTOR
+       | '(' FACTOR ')'
+ 
+ FACTOR : MATH
+        | '(' MATH ')'
+        | VALOR
+ 
+ IFBLOCK : IF '(' COND ')' '{' INSIDE '}' IFBLOCK2
+
+ IFBLOCK2 : ELIF '(' COND ')' '{' INSIDE '}' IFBLOCK2
+          | ELSE '{' INSIDE '}'
+          | Vazio
+
+ REPEATBLOCK : REPEAT '(' COND ')' '{' INSIDE '}'
+ 
+ COND : VALOR1 '<' VALOR1
+      | VALOR1 '>' VALOR1
+      | VALOR1 '=' VALOR1
+      | VALOR1 '<=' VALOR1
+      | VALOR1 '>=' VALOR1"
