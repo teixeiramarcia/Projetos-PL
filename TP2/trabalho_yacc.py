@@ -30,10 +30,10 @@ def p_DECLS_VAZIO(p):
 def p_DECL_ID(p):
     "DECL : INT ID"
     if (p[2] in p.parser.variables.keys()):
-        print("Erro, na linha ", lines)
+        print("Erro na linha ", lines)
         print("A variavel ", p[2], " já existe")
     else:
-        p.parser.variables[p[2]] = offset_var
+        p.parser.variables[p[2]] = [offset_var, 0]
         offset_var += 1
         print("PUSHI 0")
 
@@ -43,19 +43,28 @@ def p_DECL_VALOR(p):
         print("Erro na linha ", lines)
         print("A variavel ", p[2], " já existe")
     else:
-        p.parser.variables[p[2]] = offset_var
+        p.parser.variables[p[2]] = [offset_var, p[4]]
         offset_var += 1
-        print("PUSHI ", p[3])
+        print("PUSHI ", p[4])
 
 def p_DECLA_NUM(p):
     "DECLA : INT ID '[' NUM ']'"
     if (p[2] in p.parser.arrays.keys()):
         print("Erro na linha ", lines)
         print("A variavel ", p[2], " já existe")
+    elif (p[4] < 0 || p[4] > p.parser.arrays.get(p[2])[1] - p.parser.arrays.get(p[2])[0]):
+        print("Erro na linha ", lines)
+        print("O valor do tamanho do array ", p[4], " está fora do tamanho do array")
+    elif (p[4] == 0):
+        print("Erro na linha ", lines)
+        print("O valor do tamanho do array não pode ser 0")
     else:
-        p.parser.arrays[p[2]] = (offset_var, offset_var+p[4])
+        lista = []
+        for(i=0;i<p[4];i++):
+            lista.append(0)
+        p.parser.arrays[p[2]] = [offset_var, offset_var+p[4]-1,lista]
         offset_var += p[4]
-        print("PUSHN 0")
+        print("PUSHN ", p[4])
 
 def p_DECLA_ID(p):
     "DECLA : INT ID '[' ID ']'"
@@ -65,19 +74,39 @@ def p_DECLA_ID(p):
     elif (p[4] not in p.parser.variables.keys()):
         print("Erro na linha ", lines)
         print("A variavel", p[4], " não existe")
-    elif (p.parser.variables.get(p[2]) < p.parser.arrays.get(p[4])[0] || p.parser.variables.get(p[2]) > p.parser.arrays.get(p[4])[1]):
+    elif (p[4] < 0 || p[4] > p.parser.arrays.get(p[2])[1] - p.parser.arrays.get(p[2])[0]):
         print("Erro na linha ", lines)
-        print("O valor da variavel", p[4], " está fora do tamanho do array")
+        print("O valor do tamanho do array ", p[4], " está fora do tamanho do array")
+    elif (p[4] == 0):
+        print("Erro na linha ", lines)
+        print("O valor do tamanho do array não pode ser 0")
     else:
-        p.parser.arrays[p[2]] = (offset_var, offset_var+p.registers.variables.get(p[4]))
-        offset_var += p[3]
+        tamanho_array = p.registers.variables.get(p[4])[1]
+        lista = []
+        for(i=0;i<tamanho_array;i++):
+            lista.append(0)
+        p.parser.arrays[p[2]] = [offset_var, offset_var+tamanho_array-1, lista]
+        offset_var += tamanho_array
         print("PUSHN ", p[3])
 
 def p_DECLA_NUM(p):
-    "DECLA : INT ID '[' NUM ']'"
-    p.parser.arrays[p[2]] = (offset_var, offset_var+p[3])
-    offset_var += p[3]
-    print("PUSHN ", p[3])
+    "DECLA : INT ID '[' MATH ']'"
+    if (p[2] in p.parser.arrays.keys()):
+        print("Erro na linha ", lines)
+        print("A variavel ", p[2], " já existe")
+    elif (p[4] < 0 || p[4] > p.parser.arrays.get(p[2])[1] - p.parser.arrays.get(p[2])[0]):
+        print("Erro na linha ", lines)
+        print("O valor do tamanho do array ", p[4], " está fora do tamanho do array")
+    elif (p[4] == 0):
+        print("Erro na linha ", lines)
+        print("O valor do tamanho do array não pode ser 0")
+    else:
+        lista = []
+        for(i=0;i<p[4];i++):
+            lista.append(0)
+        p.parser.arrays[p[2]] = [offset_var, offset_var+p[4]-1,lista]
+        offset_var += p[4]
+        print("PUSHN ", p[4])
 
 def p_Comando_dump(p):
     "Comando : DUMP"
@@ -142,5 +171,3 @@ for linha in sys.stdin:
     result = parser.parse(linha)
     lines += 1
     print(result)
-
-# TIRAR TUDO DE CAPSLOCK!!!!!!!!!!!!!!!!!!!!!!!!!

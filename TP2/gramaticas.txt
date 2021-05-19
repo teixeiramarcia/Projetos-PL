@@ -21,21 +21,30 @@
  DECLA : INT ID '[' NUM ']'
        | INT ID '[' ID ']'
        | INT ID '[' MATH ']'
+       | INT ID '[' ID [' NUM ']' ']'
+       | INT ID '[' ID [' ID ']' ']'
+       | INT ID '[' ID [' MATH ']' ']'
 
  ATUL : ID '=' VALOR
       | ID '[' NUM ']' '=' VALOR
       | ID '[' ID ']' '=' VALOR
       | ID '[' MATH ']' '=' VALOR
+      | ID '[' ID '[' NUM ']' ']' '=' VALOR
+      | ID '[' ID '[' ID ']' ']' '=' VALOR
+      | ID '[' ID '[' MATH ']' ']' '=' VALOR
 
  VALOR : VALOR1
        | SCAN
 
  VALOR1 : NUM
         | ID
+        | MATH
         | ID '[' ID ']'
         | ID '[' NUM ']'
         | ID '[' MATH ']'
-        | MATH
+        | ID '[' ID '[' NUM ']' ']'
+        | ID '[' ID '[' ID ']' ']'
+        | ID '[' ID '[' MATH ']' ']'
  
  MATH : MATH '+' TERMO
       | '(' MATH '+' TERMO ')'

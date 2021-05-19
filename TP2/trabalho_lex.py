@@ -1,7 +1,7 @@
 import ply.lex as lex
 
 tokens = ['INT', 'ID', 'IF', 'ELSE', 'ELIF', 'REPEAT', 'READ', 'PRINT', 'NUM', 'RETURN'] 
-literals = ['(', ')',';','<','>','=','+','-','*','/','{','}','[',']','|']
+literals = ['(', ')',';','<','>','=','+','-','*','/','{','}','[',']','|','&']
 
 def t_IF(t):
     r'if'
@@ -31,7 +31,7 @@ def t_NUM(t):
     r'\d+'
 
 def t_ID(t):
-    r'[a-z][a-zA-Z0-9]+'
+    r'[a-z][a-zA-Z0-9]*'
 
 t_ignore = " \t\n"
 
