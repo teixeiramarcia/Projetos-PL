@@ -1,0 +1,167 @@
+int i
+int j
+int a = j+i
+print a
+
+pushi...
+
+read...
+
+write...
+
+pushn...
+
+"DECLARACAO : INT ID"
+            | INT ID = VALOR"
+
+p_DECLARACAO1(p):
+    "DECLARACAO : INT ID"
+    print("pushi 0")
+
+p_DECLARACAO2(p):
+    "DECLARACAO : INT ID = VALOR"
+    print("pushi ", p[4])
+
+//print 5
+pushi 5
+writei
+
+//print 2-3*3+5
+pushi 2
+pushi 3
+pushi 3
+mul
+sub
+pushi 5
+add
+writei
+
+//int contador
+//int i = 2
+//contador = 5*i
+//write contador
+pushi 0
+pushi 2
+pushi 5
+pushg 1
+mul
+storeg 0
+pushg 0
+writei
+
+
+//int lista[10]
+//lista[2] = 7
+//print lista[2]
+pushn 10
+start
+pushi 7
+storeg 2
+pushg 2
+writei
+stop
+
+//int dummy[3]
+//int lista[10]
+//lista[2] = 7
+//print lista[2]
+start
+pushn 3
+pushn 10
+pushgp
+pushi 3
+padd
+pushi 2
+pushi 7
+storen
+pushgp
+pushi 3
+padd
+pushi 2
+loadn
+writei
+stop
+
+//int i = 0
+//int lista[10]
+//repeat(10){
+//    read(lista[i]) lista[i] = read 
+//    i = i+1;
+//}
+start
+pushi 0
+pushn 10
+pushi 10
+r1:
+    pushg 11
+    pushi 1
+    sub
+    storeg 11
+
+    pushgp
+    pushi 1
+    padd
+    pushg 0
+    read
+    atoi
+    storen
+
+    pushg 0
+    pushi 1
+    add
+    storeg 0
+
+    pushg 11
+    pushi 0
+    equal
+    jz r1
+stop
+
+//int a,b
+//read(a)
+//read(b)
+//if(a>b)
+//    print a
+//else 
+//    print b
+start
+pushi 0
+pushi 0
+read
+atoi
+storeg 0
+read
+atoi
+storeg 1
+pushg 0
+pushg 1
+sup
+jz else
+pushg 0
+writei
+jump fimif
+
+else:
+    pushg 1
+    writei
+
+fimif:
+    stop
+
+//int soma, n
+//repeat{
+//    read(n)
+//    soma = soma + n
+//} until(n == 0)
+//print soma
+start
+pushi 0
+pushi 0
+
+stop
+//int n, i, soma
+//
+//read(n)
+//for(i=1; i<=n; i++)
+//    soma = soma + i
+//print soma

@@ -2,11 +2,12 @@
 "CODE : DECLS INSIDE
 
  INSIDE : INSIDE INFO
-        | VAZIO
+        | INFO
 
  DECLS : DECLS DECL ';'
        | DECLS DECLA ';'
-       | VAZIO
+       | DECL ';'
+       | DECLA ';'
 
  INFO : ATUL ';'
       | MATH ';'
@@ -18,53 +19,32 @@
  DECL : INT ID
       | INT ID '=' VALOR
  
- DECLA : INT ID '[' NUM ']'
-       | INT ID '[' ID ']'
-       | INT ID '[' MATH ']'
-       | INT ID '[' ID [' NUM ']' ']'
-       | INT ID '[' ID [' ID ']' ']'
-       | INT ID '[' ID [' MATH ']' ']'
+ DECLA : INT ID '[' VALOR1 ']'
 
  ATUL : ID '=' VALOR
-      | ID '[' NUM ']' '=' VALOR
-      | ID '[' ID ']' '=' VALOR
-      | ID '[' MATH ']' '=' VALOR
-      | ID '[' ID '[' NUM ']' ']' '=' VALOR
-      | ID '[' ID '[' ID ']' ']' '=' VALOR
-      | ID '[' ID '[' MATH ']' ']' '=' VALOR
+      | ID '[' VALOR1 ']' '=' VALOR
 
  VALOR : VALOR1
-       | SCAN
+       | READ '(' ')'
 
  VALOR1 : NUM
         | ID
         | MATH
-        | ID '[' ID ']'
-        | ID '[' NUM ']'
-        | ID '[' MATH ']'
-        | ID '[' ID '[' NUM ']' ']'
-        | ID '[' ID '[' ID ']' ']'
-        | ID '[' ID '[' MATH ']' ']'
+        | ID '[' VALOR1 ']'
  
  MATH : MATH '+' TERMO
-      | '(' MATH '+' TERMO ')'
       | MATH '-' TERMO
-      | '(' MATH '-' TERMO ')'
       | TERMO
-      | '(' TERMO ')'
  
  TERMO : TERMO '*' FACTOR
-       |'(' TERMO '*' FACTOR ')'
        | TERMO '/' FACTOR
-       | '(' TERMO '/' FACTOR ')'
        | FACTOR
-       | '(' FACTOR ')'
  
  FACTOR : MATH
         | '(' MATH ')'
         | VALOR
  
- IFBLOCK : IF '(' COND ')' '{' INSIDE '}' IFBLOCK2
+ IFBLOCK : IF '(' COND ')' '{' INSIDE '}' IFBLOCK2 //NÃO FAÇO PRINT ENVIA-SE AS STRINGS
 
  IFBLOCK2 : ELIF '(' COND ')' '{' INSIDE '}' IFBLOCK2
           | ELSE '{' INSIDE '}'
@@ -79,7 +59,8 @@
       | VALOR1 '>=' VALOR1 COND1
 
  COND1 : '|''|' COND
-       | '&''&' COND"
+       | '&''&' COND
+       | VAZIO"
 
 ----------------------------------------------------------------------Versão com funções (desatualizada)--------------------------------------------------------------
 
@@ -114,7 +95,7 @@
       | ID '[' MATH ']' '=' VALOR
 
  VALOR : VALOR1
-       | SCAN
+       | READ
 
  VALOR1 : NUM
         | ID
