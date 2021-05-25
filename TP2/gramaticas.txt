@@ -2,12 +2,12 @@
 "CODE : DECLS INSIDE
 
  INSIDE : INSIDE INFO
-        | INFO
+        | VAZIO
 
  DECLS : DECLS DECL ';'
        | DECLS DECLA ';'
-       | DECL ';'
-       | DECLA ';'
+       | DECLS COMENTARIO
+       | VAZIO
 
  INFO : ATUL ';'
       | MATH ';'
@@ -15,6 +15,7 @@
       | REPEATBLOCK
       | PRINT '(' VALOR ')' ';'
       | RETURN VALOR ';'
+      | COMENTARIO
  
  DECL : INT ID
       | INT ID '=' VALOR
@@ -55,11 +56,12 @@
  COND : VALOR1 '<' VALOR1 COND1
       | VALOR1 '>' VALOR1 COND1
       | VALOR1 '=' VALOR1 COND1
-      | VALOR1 '<=' VALOR1 COND1
-      | VALOR1 '>=' VALOR1 COND1
+      | VALOR1 '!' '=' VALOR1 COND1
+      | VALOR1 '<' '=' VALOR1 COND1
+      | VALOR1 '>' '=' VALOR1 COND1
 
- COND1 : '|''|' COND
-       | '&''&' COND
+ COND1 : '|' '|' COND
+       | '&' '&' COND
        | VAZIO"
 
 ----------------------------------------------------------------------Versão com funções (desatualizada)--------------------------------------------------------------
