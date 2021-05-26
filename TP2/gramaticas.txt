@@ -1,36 +1,29 @@
 -------------------------------------------------------------------------Versão sem funçoes (atualizada)----------------------------------------------------------
 "CODE : DECLS INSIDE
 
- INSIDE : INSIDE INFO
-        | INFO
-
  DECLS : DECLS DECL ';'
        | DECLS DECLA ';'
-       | DECL ';'
-       | DECLA ';'
+       | DECLS COMENTARIO
+       | VAZIO
+
+ INSIDE : INSIDE INFO
+        | VAZIO
+
+ DECL : INT ID
+      | INT ID '=' MATH
+ 
+ DECLA : INT ID '[' NUM ']'
+       | INT ID '[' NUM ']' '[' NUM ']'
 
  INFO : ATUL ';'
-      | MATH ';'
       | IFBLOCK
       | REPEATBLOCK
-      | PRINT '(' VALOR ')' ';'
+      | PRINT '(' MATH ')' ';'
       | RETURN VALOR ';'
- 
- DECL : INT ID
-      | INT ID '=' VALOR
- 
- DECLA : INT ID '[' VALOR1 ']'
+      | COMENTARIO
 
- ATUL : ID '=' VALOR
-      | ID '[' VALOR1 ']' '=' VALOR
-
- VALOR : VALOR1
-       | READ '(' ')'
-
- VALOR1 : NUM
-        | ID
-        | MATH
-        | ID '[' VALOR1 ']'
+ ATUL : ID '=' MATH
+      | ID '[' MATH ']' '=' MATH
  
  MATH : MATH '+' TERMO
       | MATH '-' TERMO
@@ -40,9 +33,11 @@
        | TERMO '/' FACTOR
        | FACTOR
  
- FACTOR : MATH
-        | '(' MATH ')'
-        | VALOR
+ FACTOR : '(' MATH ')'
+        | NUM
+        | ID
+        | READ '(' ')'
+        | ID '[' MATH ']'
  
  IFBLOCK : IF '(' COND ')' '{' INSIDE '}' IFBLOCK2 //NÃO FAÇO PRINT ENVIA-SE AS STRINGS
 
@@ -52,15 +47,24 @@
 
  REPEATBLOCK : REPEAT '(' COND ')' '{' INSIDE '}'
  
- COND : VALOR1 '<' VALOR1 COND1
-      | VALOR1 '>' VALOR1 COND1
-      | VALOR1 '=' VALOR1 COND1
-      | VALOR1 '<=' VALOR1 COND1
-      | VALOR1 '>=' VALOR1 COND1
+ COND : COND '&' '&' COND1
+      | COND1
 
- COND1 : '|''|' COND
-       | '&''&' COND
-       | VAZIO"
+ COND1 : COND1 '| '|' COND2
+       | COND2
+
+ COND2 : NOT COND
+       | TRUE
+       | FALSE
+       | '(' COND ')'
+       | COND3
+
+ COND3 : VALOR1 '<' VALOR1
+      | VALOR1 '>' VALOR1
+      | VALOR1 '=' '=' VALOR1
+      | VALOR1 '!' '=' VALOR1
+      | VALOR1 '<' '=' VALOR1
+      | VALOR1 '>' '=' VALOR1"
 
 ----------------------------------------------------------------------Versão com funções (desatualizada)--------------------------------------------------------------
 
