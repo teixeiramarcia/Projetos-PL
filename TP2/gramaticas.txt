@@ -59,12 +59,12 @@
        | '(' COND ')'
        | COND3
 
- COND3 : VALOR1 '<' VALOR1
-      | VALOR1 '>' VALOR1
-      | VALOR1 '=' '=' VALOR1
-      | VALOR1 '!' '=' VALOR1
-      | VALOR1 '<' '=' VALOR1
-      | VALOR1 '>' '=' VALOR1"
+ COND3 : MATH '<' MATH
+      | MATH '>' MATH
+      | MATH '=' '=' MATH
+      | MATH '!' '=' MATH
+      | MATH '<' '=' MATH
+      | MATH '>' '=' MATH"
 
 ----------------------------------------------------------------------Versão com funções (desatualizada)--------------------------------------------------------------
 
