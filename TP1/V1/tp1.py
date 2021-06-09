@@ -51,7 +51,7 @@ def createOutput():
         unrepeated = str(len(my_categories_unrepeated.get(cat)))
         file.write(f"           <li><strong><a href='{cat}.html' style='color: #535353'>" + cat + "</a>" + ": </strong>" + str(len(val)) + " elementos (" + unrepeated + " únicos)<p></li>\n")
     file.write("        </ul>\n")
-    file.write("        <button><a href='extra.html'>Extras</a></button>\n")
+    file.write("        <button><a href='extras.html'>Extras</a></button>\n")
     file.write("    </body>\n")
     file.write("</html>")
     file.close()
@@ -80,7 +80,7 @@ def createFiles():
         file.close()
 
 
-dest_file = open('extra.html', 'w')
+dest_file = open('extras.html', 'w')
 
 dest_file.write("<!DOCTYPE html>\n")
 dest_file.write("<html>\n")
@@ -97,7 +97,7 @@ for linha in file:
         if (y.group(1) == 'B'):
             if (in_category == 1):
                 if (num_elems != 0):
-                    dest_file.write("       " + "<p>" + cat + sentence + "  (elements: " + str(num_elems) + ")</p>\n")
+                    dest_file.write("       " + "<p>" + cat + sentence + "  (elementos: " + str(num_elems) + ")</p>\n")
                     update_in_category(category, sentence, 1)
                     sentence += " (linhas: " + string_linha + ")"
                     update_in_category(category, sentence, 0)
@@ -119,7 +119,7 @@ for linha in file:
         elif (y.group(5) == 'O'):
             if (in_category == 1):
                 if(num_elems != 0):
-                    dest_file.write("       " + "<p>" + cat + sentence + "  (elements: " + str(num_elems) + ")</p>\n")
+                    dest_file.write("       " + "<p>" + cat + sentence + "  (elementos: " + str(num_elems) + ")</p>\n")
                     update_in_category(category, sentence, 1)
                     sentence += " (linhas: " + string_linha + ")"
                     update_in_category(category, sentence, 0)
@@ -130,7 +130,7 @@ for linha in file:
                     in_category = 0
     else:
         if (num_elems != 0):
-            dest_file.write("       " + "<p>" + cat + sentence + "  (elements: " + str(num_elems) + ")</p>\n")
+            dest_file.write("       " + "<p>" + cat + sentence + "  (elementos: " + str(num_elems) + ")</p>\n")
             update_in_category(category, sentence, 1)
             sentence += " (linhas: " + string_linha + ")"
             update_in_category(category, sentence, 0)
