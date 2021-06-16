@@ -1,7 +1,7 @@
 import ply.lex as lex
 
-tokens = ['INT', 'ID', 'IF', 'ELSE', 'ELIF', 'REPEAT', 'READ', 'PRINT', 'NUM', 'RETURN', 'COMENTARIO', 'NOT', 'TRUE', 'FALSE']
-literals = ['(', ')',';','<','>','=','+','-','*','/','{','}','[',']','|','&','!']
+tokens = ['INT', 'ID', 'IF', 'ELSE', 'ELIF', 'REPEAT', 'READ', 'PRINT', 'NUM', 'NUMNEG', 'RETURN', 'COMENTARIO', 'TRUE', 'FALSE', 'UNTIL', 'MAIN', 'STRINGS', 'WHILE', 'DO', 'FOR']
+literals = ['(', ')',';','<','>','=','+','-','*','/','{','}','[',']','|','&','!', '%']
 
 def t_IF(t):
     r'if'
@@ -19,9 +19,13 @@ def t_REPEAT(t):
     r'repeat'
     return t
 
-#def t_RETURN(t):
-#    r'return'
-#
+def t_UNTIL(t):
+    r'until'
+    return t
+
+def t_RETURN(t):
+    r'return'
+    return t
 
 def t_READ(t):
     r'read'
@@ -35,20 +39,40 @@ def t_INT(t):
     r'int'
     return t
 
-def t_NOT(t):
-    r'not'
+def t_MAIN(t):
+    r'main'
     return t
 
 def t_TRUE(t):
-    r'true'
+    r'TRUE'
     return t
 
 def t_FALSE(t):
-    r'false'
+    r'FALSE'
+    return t
+
+def t_WHILE(t):
+    r'while'
+    return t
+
+def t_DO(t):
+    r'do'
+    return t
+
+def t_FOR(t):
+    r'for'
+    return t
+
+def t_NUMNEG(t):
+    r'\(-\d+\)'
     return t
 
 def t_NUM(t):
     r'\d+'
+    return t
+
+def t_STRINGS(t):
+    r'"[^"]*"'
     return t
 
 def t_ID(t):
@@ -58,6 +82,7 @@ def t_ID(t):
 def t_COMENTARIO(t):
     r'(\/\/.+)|(/\*((?!\*/).|\n)*\*/)'
     return t
+
 
 t_ignore = " \t\n\r"
 

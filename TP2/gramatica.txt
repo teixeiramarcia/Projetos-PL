@@ -1,0 +1,86 @@
+GRAMMAR : DECLS FUNCS MAINS
+
+FUNCS : FUNCS FUNC
+      | VAZIO
+
+FUNC : ID { CODE RETURNS }
+     | COMENTARIO
+
+MAINS : MAIN { CODE }
+
+DECLS : DECLS DECL ;
+      | DECLS COMENTARIO
+      | VAZIO
+
+CODE : CODE INFO
+     | VAZIO
+
+DECL : INT ID
+     | INT ID = MATH
+
+INFO : ATUL ;
+     | IFBLOCK
+     | REPEATBLOCK
+     | WHILEBLOCK
+     | FORBLOCK
+     | PRINT ( MATH ) ;
+     | PRINT ( STRINGS ) ;
+     | COMENTARIO
+
+RETURNS : RETURN MATH ;
+
+ATUL : ID = MATH
+     | ID + +
+     | ID - -
+     | ID + = MATH
+     | ID - = MATH
+     | ID * = MATH
+     | ID / = MATH
+
+MATH : MATH + TERMO
+     | MATH - TERMO
+     | TERMO
+
+TERMO : TERMO * FACTOR
+      | TERMO / FACTOR
+      | TERMO % FACTOR
+      | FACTOR
+
+FACTOR : ( MATH )
+       | NUM
+       | NUMNEG
+       | ID
+       | ID ( )
+       | READ ( )
+
+IFBLOCK : IF ( COND ) { CODE } IFBLOCK2
+
+IFBLOCK2 : ELIF ( COND ) { CODE } IFBLOCK2
+         | ELSE { CODE }
+         | VAZIO
+
+REPEATBLOCK : REPEAT { CODE } UNTIL ( COND )
+
+WHILEBLOCK : WHILE ( COND ) DO { CODE }
+
+FORBLOCK : FOR ( ATUL ; COND ; ATUL ) { CODE }
+
+COND : COND & & COND1
+     | COND1
+
+COND1 : COND1 | | COND2
+      | COND2
+
+COND2 : ! COND
+      | TRUE
+      | FALSE
+      | ( COND )
+      | COND3
+
+COND3 : MATH < MATH
+      | MATH > MATH
+      | MATH = = MATH
+      | MATH ! = MATH
+      | MATH < = MATH
+      | MATH > = MATH
+      | MATH
